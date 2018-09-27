@@ -3,10 +3,10 @@ import  java.util.Scanner;
 public class DictionaryManagement {
 
     static Scanner reader = new Scanner(System.in);
-    public static Dictionary dic = new Dictionary();
+
     public static int numbers;
 
-    public static void insertFromCommandline() {
+    public static void insertFromCommandline(Dictionary dic) {
 
         numbers = reader.nextInt();
 
@@ -26,7 +26,9 @@ public class DictionaryManagement {
             putInWord.setWord_explain(vn_word);
 
             dic.getWords().add(putInWord);
+
         }
+        System.out.print(dic.getWords().size());
     }
 
     public static void insertFromFile() {
