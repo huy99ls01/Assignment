@@ -2,6 +2,7 @@
 public class DictionaryCommandline {
 
     private static int num = 1;
+
     public static Dictionary showWord = new Dictionary();
 
     public static void showAllWords() {
