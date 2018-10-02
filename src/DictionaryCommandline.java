@@ -2,6 +2,7 @@
 public class DictionaryCommandline {
 
     private static int num = 1;
+
     public static Dictionary showWord = new Dictionary();
 
     public static void showAllWords() {
@@ -15,7 +16,8 @@ public class DictionaryCommandline {
     }
 
     public static void dictionaryBasic(){
-        DictionaryManagement.insertFromCommandline(showWord);
+        //DictionaryManagement.insertFromCommandline(showWord);
+        DictionaryManagement.insertFromFile(showWord);
         DictionaryCommandline.showAllWords();
     }
 
