@@ -16,12 +16,15 @@ public class DictionaryCommandline {
     }
 
     public static void dictionaryBasic(){
-        DictionaryManagement.insertFromCommandline(showWord);
+        //DictionaryManagement.insertFromCommandline(showWord);
+        DictionaryManagement.insertFromFile(showWord);
         DictionaryCommandline.showAllWords();
     }
 
-    public void dictionaryAdvanced() {
-
+    public static void dictionaryAdvanced() {
+        DictionaryManagement.insertFromFile(showWord);
+        DictionaryCommandline.showAllWords();
+        DictionaryManagement.dictionaryLookup(showWord);
     }
 
     public void dictionarySearcher() {
