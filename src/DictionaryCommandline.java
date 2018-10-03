@@ -1,4 +1,3 @@
-
 public class DictionaryCommandline {
 
     private static int num = 1;
@@ -21,8 +20,10 @@ public class DictionaryCommandline {
         DictionaryCommandline.showAllWords();
     }
 
-    public void dictionaryAdvanced() {
-
+    public static void dictionaryAdvanced() {
+        DictionaryManagement.insertFromFile(showWord);
+        DictionaryCommandline.showAllWords();
+        DictionaryManagement.dictionaryLookup(showWord);
     }
 
     public void dictionarySearcher() {

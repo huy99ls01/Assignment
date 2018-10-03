@@ -1,5 +1,6 @@
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import  java.util.*;
 
 public class DictionaryManagement {
 
@@ -37,40 +38,53 @@ public class DictionaryManagement {
 
     public static void insertFromFile(Dictionary dic) {
 
-        File dictionaryFile = new File("/Users/bangdo/Documents/STUDY/OOP/Dictionary/src/Dictionary.txt");
+        String fileName = "/Users/bangdo/Documents/STUDY/OOP/Dictionary/src/dict.txt";
+
+        File file = new File(fileName);
+
+
         try {
-            Scanner sc = new Scanner(dictionaryFile);
+
+            Scanner sc = new Scanner(file);
 
             while (sc.hasNextLine()) {
-                Word putInWord = new Word();
-                String i = sc.next();
-                //System.out.println(i + "-");
-                String t = sc.nextLine();
 
+                Word putInWord = new Word();
+                // to save the english word
+                String i = sc.next();
+                // to save the vietnamese word
+                String t = sc.nextLine();
+                // remove white space not necessary
                 t = t.trim();
+
                 putInWord.setWord_target(i);
                 putInWord.setWord_explain(t);
 
                 dic.getWords().add(putInWord);
-
-                System.out.println(i + " --- "+t);
-
             }
+
             sc.close();
         }
         catch (FileNotFoundException e) {
+
             e.printStackTrace();
         }
 
     }
 
-    public static void dictionaryLookup() {
+    public static void dictionaryLookup(Dictionary dic) {
+        String lookup;
+        System.out.print("Word need to look: ");
+        lookup = reader.nextLine();
 
+        for (Word wr : dic.getWords()) {
+            if (lookup.equals(wr.getWord_target())) {
+                System.out.println(wr.getWord_explain());
+            }
+        }
     }
 
     public void dictionaryExportToFile() {
 
     }
-
-
 }
