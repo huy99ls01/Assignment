@@ -2,6 +2,7 @@ package app.CommandLine;
 
 public class Word implements Comparable<Word>{
 
+
     private String word_target, word_explain;
 
     public Word() {
@@ -32,5 +33,10 @@ public class Word implements Comparable<Word>{
     @Override
     public int compareTo(Word word) {
         return this.getWord_target().compareTo(word.getWord_target());
+    }
+
+    @Override
+    public String toString() {
+        return word_target;
     }
 }

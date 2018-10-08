@@ -7,8 +7,8 @@ import javafx.application.Application;
 
 public class DictionaryApplication {
 
-
     public static void runApplication() {
+
         new Thread() {
             @Override
             public void run() {
@@ -17,6 +17,4 @@ public class DictionaryApplication {
         }.start();
 
     }
-
-
 }

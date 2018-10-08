@@ -1,5 +1,7 @@
 package app.CommandLine;
 
+import sun.reflect.generics.tree.Tree;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import  java.util.*;
@@ -8,6 +10,9 @@ public class DictionaryManagement {
 
     static Scanner reader = new Scanner(System.in);
 
+    public static DictionaryManagement dictionaryManagement = new DictionaryManagement();
+
+    public static DictionaryManagement dicman = new DictionaryManagement();
     public static int numbers;
 
     public static void insertFromCommandline(Dictionary dic) {
@@ -92,9 +97,27 @@ public class DictionaryManagement {
         dic.getWords().remove(new Word(lookup, null));
     }
 
-    
+
+    public ArrayList<String> abc(ArrayList<Word> words){
+        ArrayList<String> arr = new ArrayList<>();
+        for(Word w :words) {
+            arr.add(w.getWord_target());
+        }
+        return arr;
+    }
+
+    public ArrayList<String> ass() {
+        ArrayList<String> newtree = new ArrayList<>();
+
+        for (Word word : Dictionary.dic.getWords()) {
+            newtree.add(word.getWord_target());
+        }
+
+        return newtree;
+    }
 
     public void dictionaryExportToFile() {
 
     }
+
 }
