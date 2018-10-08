@@ -1,3 +1,6 @@
+package app.CommandLine;
+
+import app.GUI.Controller;
 
 public class DictionaryCommandline {
 
@@ -23,8 +26,10 @@ public class DictionaryCommandline {
 
     public static void dictionaryAdvanced() {
         DictionaryManagement.insertFromFile(showWord);
+        //DictionaryCommandline.showAllWords();
+        //DictionaryManagement.dictionaryLookup(showWord);
+        //DictionaryManagement.dictionaryRemove(showWord);
         DictionaryCommandline.showAllWords();
-        DictionaryManagement.dictionaryLookup(showWord);
     }
 
     public void dictionarySearcher() {

@@ -1,3 +1,5 @@
+package app.CommandLine;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import  java.util.*;
@@ -16,7 +18,6 @@ public class DictionaryManagement {
         for (int i = 0; i < numbers; i++) {
 
             Word putInWord = new Word();
-
             String en_word, vn_word;
 
             System.out.print("English Word: ");
@@ -83,6 +84,15 @@ public class DictionaryManagement {
             }
         }
     }
+
+    public static void dictionaryRemove(Dictionary dic) {
+        String lookup;
+        System.out.print("Word need to remove: ");
+        lookup = reader.nextLine();
+        dic.getWords().remove(new Word(lookup, null));
+    }
+
+    
 
     public void dictionaryExportToFile() {
 
