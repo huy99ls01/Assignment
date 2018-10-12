@@ -2,6 +2,10 @@ package app.GUI.ControlFactory;
 
 import app.CommandLine.Dictionary;
 import app.CommandLine.DictionaryManagement;
+import com.voicerss.tts.AudioCodec;
+import com.voicerss.tts.Languages;
+import com.voicerss.tts.VoiceParameters;
+import com.voicerss.tts.VoiceProvider;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,8 +19,16 @@ import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import java.io.FileOutputStream;
+import com.voicerss.tts.AudioFormat;
 
+
+import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
@@ -134,5 +146,36 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources){
         listWords.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    }
+
+
+    public void ClickForSound(ActionEvent event) throws Exception{
+
+        //API gọi tới nhà cung cấp để lấy file phát âm theo từ khóa word
+        VoiceProvider tts = new VoiceProvider("1d7d26040c284a6ba91ecb53977ee3f0");
+        String word = listWords.getSelectionModel().getSelectedItem();
+        VoiceParameters params = new VoiceParameters(word, Languages.English_UnitedStates);
+        params.setCodec(AudioCodec.WAV);
+        params.setFormat(AudioFormat.Format_44KHZ.AF_44khz_16bit_stereo);
+        params.setBase64(false);
+        params.setSSML(false);
+        params.setRate(0);
+        byte[] voice = tts.speech(params);
+
+        // Lưu file âm thanh tải về vào file voice.mp3
+        FileOutputStream fos = new FileOutputStream("src/app/GUI/Sound/voice.mp3");
+        fos.write(voice, 0, voice.length);
+        fos.flush();
+        fos.close();
+
+        // Mở file mp3 bằng FileInputStream
+        String gongFile = "src/app/GUI/Sound/voice.mp3";
+        InputStream in = new FileInputStream(gongFile);
+
+        // Tạo audiostream từ FileInputStream
+        AudioStream audioStream = new AudioStream(in);
+
+        // Mở file âm thanh vừa tải về
+        AudioPlayer.player.start(audioStream);
     }
 }
