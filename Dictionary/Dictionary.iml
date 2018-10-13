@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="voicerss_tts" level="project" />
+    <orderEntry type="library" name="gtranslateapi-1" level="project" />
   </component>
 </module>

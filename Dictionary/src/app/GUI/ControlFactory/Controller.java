@@ -2,10 +2,7 @@ package app.GUI.ControlFactory;
 
 import app.CommandLine.Dictionary;
 import app.CommandLine.DictionaryManagement;
-import com.voicerss.tts.AudioCodec;
-import com.voicerss.tts.Languages;
-import com.voicerss.tts.VoiceParameters;
-import com.voicerss.tts.VoiceProvider;
+import com.voicerss.tts.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,33 +13,24 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
-import java.io.FileOutputStream;
-import com.voicerss.tts.AudioFormat;
 
-
-import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 public class Controller implements Initializable {
 
 
-    @FXML private ListView<String> listView = new ListView<>();
-
     @FXML private ListView<String> listWords = new ListView<>();
 
     @FXML private TextField searchedWord;
-
-    //@FXML private ListView listView;
 
     @FXML private TextArea textArea;
 
@@ -55,7 +43,7 @@ public class Controller implements Initializable {
      * wwhen this method call, it'll print all en_words int txt file
      * @param
      */
-    /*@FXML
+    @FXML
     public void ShowAllWordsButton(ActionEvent event)  {
 
         //ArrayList<String> listWordsInViewList = new ArrayList<String>();
@@ -64,8 +52,8 @@ public class Controller implements Initializable {
         listWordsInViewList = DictionaryManagement.dictionaryManagement.ass();
 
         ObservableList<String> listWord = FXCollections.observableArrayList(listWordsInViewList);
-        listView.setItems(listWord);
-    }*/
+        listWords.setItems(listWord);
+    }
 
     /**
      * when this method call, it'll change to AddScreen
@@ -75,6 +63,15 @@ public class Controller implements Initializable {
     @FXML
     public void SwitchToAddScreen(ActionEvent event) throws Exception{
         Parent addViewScreen = FXMLLoader.load(getClass().getResource("AddScreen.fxml"));
+        Scene addViewScene = new Scene(addViewScreen);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(addViewScene);
+        window.show();
+    }
+
+    @FXML
+    public void SwitchToTranslateScreen(ActionEvent event) throws Exception {
+        Parent addViewScreen = FXMLLoader.load(getClass().getResource("TranslateAPI.fxml"));
         Scene addViewScene = new Scene(addViewScreen);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(addViewScene);
@@ -116,23 +113,43 @@ public class Controller implements Initializable {
         this.textArea.setText(wordExplain);
     }
 
+    /**
+     *
+     * this method use to remove a word from dictionary
+     * @param event
+     * @throws Exception
+     *
+     */
     public void RemoveWord(ActionEvent event) throws  Exception{
         DictionaryManagement.dictionaryRemove(this.labelTargetWord.getText());
         DictionaryManagement.dictionaryExportToFile();
     }
 
 
-    public void PlaySound(ActionEvent event) {
+    /*public void PlaySound(ActionEvent event) {
         String music = "/home/dean/IdeaProjects/Dictionary/src/app/GUI/Sound/block.mp3";
         Media sound = new Media(new File(music).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
-    }
+    }*/
 
+
+    /**
+     *
+     * this method call and it'll push a new word in dictionary
+     * @param event
+     * @throws Exception
+     *
+     */
     public void AddFavoriteButton(ActionEvent event) throws Exception{
         DictionaryManagement.dictionaryExportToFile(labelTargetWord.getText(), textArea.getText(), labelSound.getText());
     }
 
+    /**
+     *
+     * this method will show all the favortire word
+     * @param event
+     */
     public void ShowFavoriteWord(ActionEvent event) {
         DictionaryManagement.insertFromFileFavorite();
 
@@ -143,12 +160,14 @@ public class Controller implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources){
-        listWords.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-    }
-
-
+    /**
+     *
+     * this method will play sound mapping to the word you click in list view,
+     * and you have to connect to internet so that this function could run
+     * @param event
+     * @throws Exception
+     *
+     */
     public void ClickForSound(ActionEvent event) throws Exception{
 
         //API gọi tới nhà cung cấp để lấy file phát âm theo từ khóa word
@@ -178,4 +197,11 @@ public class Controller implements Initializable {
         // Mở file âm thanh vừa tải về
         AudioPlayer.player.start(audioStream);
     }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources){
+        DictionaryManagement.insertFromFileFavorite();
+        listWords.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    }
+
 }
